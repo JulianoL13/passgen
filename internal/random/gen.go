@@ -10,12 +10,17 @@ import (
 const alphabetUpper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 const alphabetLow = "abcdefghijklmnopqrstuvwxyz"
 const nums = "0123456789"
-const specialChars = "!@#$%&*()_+-=,.^~?<>;:/{}"
+const specialChars = "!@#$%&*()_+-=,.^~?<>;:/{}[]|\\'\"`"
 
 func GetRandomPass(size int, useUpper bool, useNum bool, useSpecial bool) string {
 	if size < 4 {
 		return "Error: password too short"
 	}
+
+	if size > 128 {
+		size = 128
+	}
+
 	pass := []rune{}
 	blob := alphabetLow
 	if err := addRequiredChar(useUpper, &blob, alphabetUpper); err != nil {
