@@ -3,6 +3,10 @@
 
 The PassGen API is a simple API to generate random passwords based on user-provided parameters. In the future I plan to add more complex patterns for generating passwords, such as passwords based on keywords.
 
+# Go version
+
+`1.23.4`
+
 ## Endpoints
 
 ### `POST /randomPass`
