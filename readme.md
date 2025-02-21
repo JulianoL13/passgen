@@ -41,6 +41,7 @@ Generates a random password based on the provided parameters.
     "password": "aB3$dEfGhIjK"
   }
   ```
+    -  `Password` max size is capped to 128
 
 #### Errors
 
