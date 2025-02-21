@@ -1,11 +1,7 @@
 package main
 
-import (
-	keygen "github.com/JulianoL13/passgen/internal/random"
-)
+import server "github.com/JulianoL13/passgen/internal/server"
 
 func main() {
-	test := keygen.GetRandomPass(15, true, true, true)
-	println(test)
-	println(len(test))
+	server.StartServer()
 }
