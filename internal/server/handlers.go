@@ -41,7 +41,11 @@ func generateRandomPasswordHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	password := keygen.GetRandomPass(request.Size, request.UseUpper, request.UseNum, request.UseSpecial)
+	password, err := keygen.GetRandomPass(request.Size, request.UseUpper, request.UseNum, request.UseSpecial)
+	if err != nil {
+		http.Error(w, "Error generating password", http.StatusInternalServerError)
+		return
+	}
 
 	w.Header().Set("Content-Type", "application/json")
 	response := map[string]string{"password": password}

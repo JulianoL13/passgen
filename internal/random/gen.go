@@ -12,9 +12,9 @@ const alphabetLow = "abcdefghijklmnopqrstuvwxyz"
 const nums = "0123456789"
 const specialChars = "!@#$%&*()_+-=,.^~?<>;:/{}[]|\\'\"`"
 
-func GetRandomPass(size int, useUpper bool, useNum bool, useSpecial bool) string {
+func GetRandomPass(size int, useUpper bool, useNum bool, useSpecial bool) (string, error) {
 	if size < 4 {
-		return "Error: password too short"
+		return "", fmt.Errorf("password size too short (minimum size is 4, but got %d)", size)
 	}
 
 	if size > 128 {
@@ -24,13 +24,13 @@ func GetRandomPass(size int, useUpper bool, useNum bool, useSpecial bool) string
 	pass := []rune{}
 	blob := alphabetLow
 	if err := addRequiredChar(useUpper, &blob, alphabetUpper); err != nil {
-		fmt.Println("Error: ", err)
+		return "", fmt.Errorf("failed to add uppercase character: %w", err)
 	}
 	if err := addRequiredChar(useNum, &blob, nums); err != nil {
-		fmt.Println("Error: ", err)
+		return "", fmt.Errorf("failed to add number character: %w", err)
 	}
 	if err := addRequiredChar(useSpecial, &blob, specialChars); err != nil {
-		fmt.Println("Error: ", err)
+		return "", fmt.Errorf("failed to add special character: %w", err)
 	}
 
 	useAtLeastOneChar(useUpper, alphabetUpper, &pass)
@@ -45,7 +45,7 @@ func GetRandomPass(size int, useUpper bool, useNum bool, useSpecial bool) string
 			pass[i]
 	})
 
-	return string(pass)
+	return string(pass), nil
 }
 
 func addRequiredChar(use bool, char *string, requiredChar string) error {

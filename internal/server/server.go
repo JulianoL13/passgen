@@ -1,11 +1,14 @@
 package server
 
-import "net/http"
+import (
+	"log"
+	"net/http"
+)
 
 func StartServer() {
 	http.HandleFunc("/randomPass", generateRandomPasswordHandler)
 	err := http.ListenAndServe(":8000", nil)
 	if err != nil {
-		panic(err)
+		log.Fatalf("Erro ao iniciar o servidor: %v", err)
 	}
 }
